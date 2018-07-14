@@ -1,0 +1,30 @@
+auto lo
+iface lo inet loopback
+
+iface eno1 inet manual
+
+iface ens4f0 inet manual
+iface ens4f1 inet manual
+
+iface ens3f0 inet manual
+iface ens3f1 inet manual
+iface ens3f2 inet manual
+iface ens3f3 inet manual
+
+auto bond0
+iface bond0 inet manual
+        slaves ens3f0 ens3f1 ens3f2 ens3f3
+        bond-mode 802.3ad
+        bond-xmit-hash-policy layer2+3
+        bond_miimon 100
+        bond-downdelay 200
+        bond-updelay 200
+        
+auto vmbr0
+iface vmbr0 inet static
+	address 10.x.x.x
+	netmask 255.255.255.0
+	gateway 10.x.x.x
+	bridge_ports bond0 
+	bridge_stp off
+	bridge_fd 0
